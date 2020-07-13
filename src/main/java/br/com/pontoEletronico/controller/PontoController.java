@@ -39,7 +39,6 @@ public class PontoController {
 	UsuarioService usuarioService;
 
 	@PostMapping("/{idUsuario}")
-	@ResponseStatus(code = HttpStatus.CREATED)
 	public ResponseEntity<?> cadastrar(@PathVariable("idUsuario") int idUsuario, @Valid @RequestBody PontoDTO pontoDTO)
 			throws Exception {
 
