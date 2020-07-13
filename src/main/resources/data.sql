@@ -1,0 +1,1 @@
+INSERT INTO USUARIO (id, nome, cpf , email, data_cadastro) VALUES (0, 'Joao Silva', '186.186.440-05', 'joao.silva@gmail.com', '2020-07-10');
