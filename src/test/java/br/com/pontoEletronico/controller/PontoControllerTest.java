@@ -91,7 +91,7 @@ public class PontoControllerTest {
 		mockMvc.perform(post("/batidas-ponto/"+idUsuario)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(pontoJson))
-				.andExpect(status().isOk())
+				.andExpect(status().isCreated())
 				.andExpect(jsonPath("$.id").value(0))
 				.andExpect(jsonPath("$.usuario.id").value(0))
 				.andExpect(jsonPath("$.usuario.nome").value("Teste"))

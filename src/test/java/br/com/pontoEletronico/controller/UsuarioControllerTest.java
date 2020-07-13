@@ -106,7 +106,7 @@ public class UsuarioControllerTest {
 		mockMvc.perform(post("/usuarios")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(usuarioJson))
-				.andExpect(status().isOk())
+				.andExpect(status().isCreated())
 				.andExpect(jsonPath("$.id").value(0))
 				.andExpect(jsonPath("$.nome").value("Teste"))
 				.andExpect(jsonPath("$.cpf").value("398.988.920-64"))
