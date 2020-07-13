@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.pontoEletronico.dto.ConsultaPontosDTO;
@@ -38,6 +39,7 @@ public class PontoController {
 	UsuarioService usuarioService;
 
 	@PostMapping("/{idUsuario}")
+	@ResponseStatus(code = HttpStatus.CREATED)
 	public ResponseEntity<?> cadastrar(@PathVariable("idUsuario") int idUsuario, @Valid @RequestBody PontoDTO pontoDTO)
 			throws Exception {
 
@@ -53,7 +55,7 @@ public class PontoController {
 		ponto.setTipoBatida(TipoBatida.valueOf(pontoDTO.getTipoBatida().toUpperCase()));
 		ponto.setDataHoraBatida(LocalDateTime.parse(pontoDTO.getDataHoraBatida()));
 
-		return ResponseEntity.ok(pontoService.criar(ponto));
+		return new ResponseEntity<>(pontoService.criar(ponto), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/{idUsuario}")
