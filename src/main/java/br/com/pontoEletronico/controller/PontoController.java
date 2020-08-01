@@ -40,7 +40,7 @@ public class PontoController {
 		Ponto ponto = new Ponto();
 		Optional<Usuario> usuarioInformado = usuarioService.buscar(idUsuario);
 
-		if (Ponto.isTipoValido(pontoDTO.getTipoBatida())) {
+		if (!Ponto.isTipoValido(pontoDTO.getTipoBatida())) {
 			return new ResponseEntity<>("Tipo de Batida deve ser ENTRADA ou SAIDA", HttpStatus.BAD_REQUEST);
 		}
 
