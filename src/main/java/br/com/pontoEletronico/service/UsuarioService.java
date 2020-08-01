@@ -18,36 +18,37 @@ public class UsuarioService {
 
 	public Usuario criar(Usuario usuario) {
 		return usuarioRepository.save(usuario);
-		
 	}
-	
-	public Optional<Usuario> buscar(int id){
+
+	public Optional<Usuario> buscar(int id) {
 		Optional<Usuario> usuario = usuarioRepository.findById(id);
-		
-		if(!usuario.isPresent()) {
+
+		if (!usuario.isPresent()) {
 			throw new PontoEletronicoException("Id", "Usuário não encontrado");
 		}
-		
+
 		return usuario;
 	}
-	
 
-	public Iterable<Usuario> listar(){
+	public Iterable<Usuario> listar() {
 		return usuarioRepository.findAll();
 	}
-	
+
 	public Usuario editar(int id, UsuarioEdicaoDTO usuario) throws Exception {
-		
+
 		Optional<Usuario> usuarioSelecionado = usuarioRepository.findById(id);
-		
-		if(!usuarioSelecionado.isPresent()) {
+
+		if (!usuarioSelecionado.isPresent()) {
 			throw new PontoEletronicoException("Id", "Usuário selecionado para edição não encontrado");
 		}
-		
-		usuarioSelecionado.get().setNome(Optional.ofNullable(usuario.getNome()).isPresent() ? usuario.getNome() : usuarioSelecionado.get().getNome());
-		usuarioSelecionado.get().setCpf(Optional.ofNullable(usuario.getCpf()).isPresent() ? usuario.getCpf() : usuarioSelecionado.get().getCpf());
-		usuarioSelecionado.get().setEmail(Optional.ofNullable(usuario.getEmail()).isPresent() ? usuario.getEmail() : usuarioSelecionado.get().getEmail());
-		
+
+		usuarioSelecionado.get().setNome(Optional.ofNullable(usuario.getNome()).isPresent() ? usuario.getNome()
+				: usuarioSelecionado.get().getNome());
+		usuarioSelecionado.get().setCpf(Optional.ofNullable(usuario.getCpf()).isPresent() ? usuario.getCpf()
+				: usuarioSelecionado.get().getCpf());
+		usuarioSelecionado.get().setEmail(Optional.ofNullable(usuario.getEmail()).isPresent() ? usuario.getEmail()
+				: usuarioSelecionado.get().getEmail());
+
 		return usuarioRepository.save(usuarioSelecionado.get());
 	}
 
