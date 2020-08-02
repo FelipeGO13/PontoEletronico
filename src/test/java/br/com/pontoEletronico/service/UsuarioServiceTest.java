@@ -18,7 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import br.com.pontoEletronico.dto.UsuarioEdicaoDTO;
+import br.com.pontoEletronico.dto.UsuarioDTO;
 import br.com.pontoEletronico.model.Usuario;
 import br.com.pontoEletronico.repository.UsuarioRepository;
 
@@ -36,7 +36,7 @@ public class UsuarioServiceTest {
 
 	private Usuario usuario;
 	
-	private UsuarioEdicaoDTO usuarioEdicaoDTO;
+	private UsuarioDTO usuarioDTO;
 
 	private int idUsuario = 0;
 
@@ -44,16 +44,16 @@ public class UsuarioServiceTest {
 	public void init() {
 		usuarios = new ArrayList<>();
 		usuario = new Usuario();
-		usuarioEdicaoDTO = new UsuarioEdicaoDTO();
+		usuarioDTO = new UsuarioDTO();
 
 		usuario.setNome("Teste");
 		usuario.setCpf("398.988.920-64");
 		usuario.setEmail("teste@teste.com");
 		usuario.setDataCadastro(LocalDate.now());
 		
-		usuarioEdicaoDTO.setNome("Teste123");
-		usuarioEdicaoDTO.setEmail("teste123@teste.com");
-		usuarioEdicaoDTO.setCpf("341.692.570-06");
+		usuarioDTO.setNome("Teste123");
+		usuarioDTO.setEmail("teste123@teste.com");
+		usuarioDTO.setCpf("341.692.570-06");
 
 		usuarios.add(usuario);
 	}
@@ -92,16 +92,16 @@ public class UsuarioServiceTest {
 		when(usuarioRepository.save(Mockito.any(Usuario.class))).then(answer -> answer.getArgument(0));
 		when(usuarioRepository.findById(Mockito.anyInt())).thenReturn(Optional.of(usuario));
 
-		Usuario usuarioEditado = usuarioService.editar(idUsuario, usuarioEdicaoDTO);
+		Usuario usuarioEditado = usuarioService.editar(idUsuario, usuarioDTO);
 
-		assertEquals(usuarioEdicaoDTO.getNome(), usuarioEditado.getNome());
-		assertEquals(usuarioEdicaoDTO.getEmail(), usuarioEditado.getEmail());
-		assertEquals(usuarioEdicaoDTO.getCpf(), usuarioEditado.getCpf());
+		assertEquals(usuarioDTO.getNome(), usuarioEditado.getNome());
+		assertEquals(usuarioDTO.getEmail(), usuarioEditado.getEmail());
+		assertEquals(usuarioDTO.getCpf(), usuarioEditado.getCpf());
 	}
 	
 	@Test(expected = RuntimeException.class)
 	public void editarExcecaoTest() throws Exception {
-		usuarioService.editar(20, usuarioEdicaoDTO);
+		usuarioService.editar(20, usuarioDTO);
 	}
 
 }

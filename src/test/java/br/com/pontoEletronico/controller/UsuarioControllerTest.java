@@ -2,8 +2,8 @@ package br.com.pontoEletronico.controller;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,7 +27,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.pontoEletronico.dto.UsuarioDTO;
-import br.com.pontoEletronico.dto.UsuarioEdicaoDTO;
 import br.com.pontoEletronico.model.Usuario;
 import br.com.pontoEletronico.service.UsuarioService;
 
@@ -47,8 +46,6 @@ public class UsuarioControllerTest {
 	
 	private UsuarioDTO usuarioDTO;
 	
-	private UsuarioEdicaoDTO usuarioEdicaoDTO;
-	
 	private int idUsuario = 0;
 	
 	private ObjectMapper mapper = new ObjectMapper();
@@ -58,7 +55,6 @@ public class UsuarioControllerTest {
 		usuarios = new ArrayList<>();
 		usuario = new Usuario();
 		usuarioDTO = new UsuarioDTO();
-		usuarioEdicaoDTO = new UsuarioEdicaoDTO();
 		
 		usuario.setNome("Teste");
 		usuario.setCpf("398.988.920-64");
@@ -68,11 +64,6 @@ public class UsuarioControllerTest {
 		usuarioDTO.setNome("Teste");
 		usuarioDTO.setCpf("398.988.920-64");
 		usuarioDTO.setEmail("teste@teste.com");
-		usuarioDTO.setDataCadastro(LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
-		
-		usuarioEdicaoDTO.setNome("Teste123");
-		usuarioEdicaoDTO.setEmail("teste123@teste.com");
-		usuarioEdicaoDTO.setCpf("341.692.570-06");
 		
 		usuarios.add(usuario);
 	}
@@ -99,7 +90,7 @@ public class UsuarioControllerTest {
 	
 	@Test
 	public void criarTest() throws Exception {
-		
+		usuarioDTO.setDataCadastro(LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
 		String usuarioJson = mapper.writeValueAsString(usuarioDTO);
 		
 		when(usuarioService.criar(Mockito.any(Usuario.class))).thenReturn(usuario);
@@ -116,9 +107,9 @@ public class UsuarioControllerTest {
 	
 	@Test
 	public void editarTest() throws Exception {
-		String usuarioJson = mapper.writeValueAsString(usuarioEdicaoDTO);
+		String usuarioJson = mapper.writeValueAsString(usuarioDTO);
 		
-		when(usuarioService.editar(Mockito.anyInt(), Mockito.any(UsuarioEdicaoDTO.class))).thenReturn(usuario);
+		when(usuarioService.editar(Mockito.anyInt(), Mockito.any(UsuarioDTO.class))).thenReturn(usuario);
 		
 		mockMvc.perform(patch("/usuarios/" + idUsuario)
 				.contentType(MediaType.APPLICATION_JSON)

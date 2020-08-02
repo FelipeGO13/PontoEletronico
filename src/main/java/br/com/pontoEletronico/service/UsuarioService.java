@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.pontoEletronico.dto.UsuarioEdicaoDTO;
+import br.com.pontoEletronico.dto.UsuarioDTO;
 import br.com.pontoEletronico.exception.PontoEletronicoException;
 import br.com.pontoEletronico.model.Usuario;
 import br.com.pontoEletronico.repository.UsuarioRepository;
@@ -34,7 +34,7 @@ public class UsuarioService {
 		return usuarioRepository.findAll();
 	}
 
-	public Usuario editar(int id, UsuarioEdicaoDTO usuario) throws Exception {
+	public Usuario editar(int id, UsuarioDTO usuario) throws Exception {
 
 		Optional<Usuario> usuarioSelecionado = usuarioRepository.findById(id);
 

@@ -69,7 +69,7 @@ public class Ponto {
 	
 	public static Boolean isTipoValido(String tipoBatida) {
 		return tipoBatida.toUpperCase().equals(TipoBatida.ENTRADA.name())
-				&& tipoBatida.toUpperCase().equals(TipoBatida.SAIDA.name());
+				|| tipoBatida.toUpperCase().equals(TipoBatida.SAIDA.name());
 	}
 	
 	public static String getHorasTotais(Iterable<Ponto> listagemPontos) {

@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull;
 import br.com.pontoEletronico.model.Ponto;
 
 public class ConsultaPontosDTO {
-
 	
 	@NotNull
 	private Iterable<Ponto> listagemPonto;

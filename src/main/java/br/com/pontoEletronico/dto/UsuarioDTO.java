@@ -1,7 +1,6 @@
 package br.com.pontoEletronico.dto;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -16,7 +15,6 @@ public class UsuarioDTO {
 	@NotBlank
 	private String email;
 	
-	@NotNull
 	private String dataCadastro;
 
 	public String getNome() {
