@@ -18,7 +18,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import br.com.pontoEletronico.dto.UsuarioDTO;
 import br.com.pontoEletronico.model.Usuario;
 import br.com.pontoEletronico.repository.UsuarioRepository;
 
@@ -36,25 +35,18 @@ public class UsuarioServiceTest {
 
 	private Usuario usuario;
 	
-	private UsuarioDTO usuarioDTO;
-
 	private int idUsuario = 0;
 
 	@Before
 	public void init() {
 		usuarios = new ArrayList<>();
 		usuario = new Usuario();
-		usuarioDTO = new UsuarioDTO();
 
 		usuario.setNome("Teste");
 		usuario.setCpf("398.988.920-64");
 		usuario.setEmail("teste@teste.com");
 		usuario.setDataCadastro(LocalDate.now());
 		
-		usuarioDTO.setNome("Teste123");
-		usuarioDTO.setEmail("teste123@teste.com");
-		usuarioDTO.setCpf("341.692.570-06");
-
 		usuarios.add(usuario);
 	}
 
@@ -92,16 +84,16 @@ public class UsuarioServiceTest {
 		when(usuarioRepository.save(Mockito.any(Usuario.class))).then(answer -> answer.getArgument(0));
 		when(usuarioRepository.findById(Mockito.anyInt())).thenReturn(Optional.of(usuario));
 
-		Usuario usuarioEditado = usuarioService.editar(idUsuario, usuarioDTO);
+		Usuario usuarioEditado = usuarioService.editar(idUsuario, usuario);
 
-		assertEquals(usuarioDTO.getNome(), usuarioEditado.getNome());
-		assertEquals(usuarioDTO.getEmail(), usuarioEditado.getEmail());
-		assertEquals(usuarioDTO.getCpf(), usuarioEditado.getCpf());
+		assertEquals(usuario.getNome(), usuarioEditado.getNome());
+		assertEquals(usuario.getEmail(), usuarioEditado.getEmail());
+		assertEquals(usuario.getCpf(), usuarioEditado.getCpf());
 	}
 	
 	@Test(expected = RuntimeException.class)
 	public void editarExcecaoTest() throws Exception {
-		usuarioService.editar(20, usuarioDTO);
+		usuarioService.editar(20, usuario);
 	}
 
 }

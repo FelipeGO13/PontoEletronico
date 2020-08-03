@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.pontoEletronico.dto.ConsultaPontosDTO;
 import br.com.pontoEletronico.exception.PontoEletronicoException;
 import br.com.pontoEletronico.model.Ponto;
 import br.com.pontoEletronico.model.Usuario;
@@ -33,15 +34,22 @@ public class PontoService {
 
 	}
 
-	public Iterable<Ponto> consultarPorUsuario(int idUsuario) {
+	public ConsultaPontosDTO consultarPorUsuario(int idUsuario) {
 
 		Optional<Usuario> usuarioSelecionado = usuarioService.buscar(idUsuario);
 
 		if (!usuarioSelecionado.isPresent()) {
 			throw new PontoEletronicoException("Id", "Usuário não encontrado");
 		}
+		
+		Iterable<Ponto> listagemPontos = pontoRepository.findByUsuario(usuarioSelecionado.get());
 
-		return pontoRepository.findByUsuario(usuarioSelecionado.get());
+		ConsultaPontosDTO consultaPontosDTO = new ConsultaPontosDTO();
+
+		consultaPontosDTO.setListagemPonto(listagemPontos);
+		consultaPontosDTO.setHorasTrabalhadas(Ponto.getHorasTotais(listagemPontos));
+		
+		return consultaPontosDTO;
 	}
 
 }

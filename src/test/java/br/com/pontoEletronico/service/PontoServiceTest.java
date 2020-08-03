@@ -19,6 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import br.com.pontoEletronico.dto.ConsultaPontosDTO;
 import br.com.pontoEletronico.dto.PontoDTO;
 import br.com.pontoEletronico.enums.TipoBatida;
 import br.com.pontoEletronico.model.Ponto;
@@ -42,6 +43,8 @@ public class PontoServiceTest {
 	
 	private PontoDTO pontoDTO;
 	
+	private ConsultaPontosDTO consultaPontosDTO;
+	
 	private Usuario usuario;
 	
 	private List<Ponto> listaPontos;
@@ -54,6 +57,7 @@ public class PontoServiceTest {
 		pontoDTO = new PontoDTO();
 		usuario = new Usuario();
 		listaPontos = new ArrayList<Ponto>();
+		consultaPontosDTO = new ConsultaPontosDTO();
 		
 		usuario.setNome("Teste");
 		usuario.setCpf("398.988.920-64");
@@ -69,6 +73,9 @@ public class PontoServiceTest {
 		pontoDTO.setTipoBatida(TipoBatida.ENTRADA.name());
 		
 		listaPontos.add(ponto);
+		
+		consultaPontosDTO.setListagemPonto(listaPontos);
+		consultaPontosDTO.setHorasTrabalhadas(Ponto.getHorasTotais(listaPontos));
 	}
 	
 	@Test
@@ -92,8 +99,8 @@ public class PontoServiceTest {
 		when(pontoRepository.findByUsuario(Mockito.any(Usuario.class))).thenReturn(listaPontos);
 		when(usuarioService.buscar(Mockito.anyInt())).thenReturn(Optional.of(usuario));
 
-		Iterable<Ponto> pontosIterable = pontoService.consultarPorUsuario(idUsuario);
-		List<Ponto> pontosEncontrados = Lists.newArrayList(pontosIterable);
+		ConsultaPontosDTO consultaPontos = pontoService.consultarPorUsuario(idUsuario);
+		List<Ponto> pontosEncontrados = Lists.newArrayList(consultaPontos.getListagemPonto());
 
 		assertEquals(1, pontosEncontrados.size());
 		assertEquals(ponto, pontosEncontrados.get(0));

@@ -55,14 +55,7 @@ public class PontoController {
 	public ResponseEntity<ConsultaPontosDTO> consultarPorUsuario(@PathVariable("idUsuario") int idUsuario)
 			throws Exception {
 
-		Iterable<Ponto> listagemPontos = pontoService.consultarPorUsuario(idUsuario);
-
-		ConsultaPontosDTO consultaPontosDTO = new ConsultaPontosDTO();
-
-		consultaPontosDTO.setListagemPonto(listagemPontos);
-		consultaPontosDTO.setHorasTrabalhadas(Ponto.getHorasTotais(listagemPontos));
-
-		return ResponseEntity.ok(consultaPontosDTO);
+		return ResponseEntity.ok(pontoService.consultarPorUsuario(idUsuario));
 	}
 
 }

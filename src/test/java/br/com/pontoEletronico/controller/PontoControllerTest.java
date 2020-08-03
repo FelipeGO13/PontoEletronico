@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.com.pontoEletronico.dto.ConsultaPontosDTO;
 import br.com.pontoEletronico.dto.PontoDTO;
 import br.com.pontoEletronico.enums.TipoBatida;
 import br.com.pontoEletronico.model.Ponto;
@@ -50,6 +51,8 @@ public class PontoControllerTest {
 	
 	private PontoDTO pontoDTO;
 	
+	private ConsultaPontosDTO consultaPontosDTO;
+	
 	private Usuario usuario;
 	
 	private int idUsuario = 0;
@@ -64,6 +67,7 @@ public class PontoControllerTest {
 		pontoDTO = new PontoDTO();
 		usuario = new Usuario();
 		listaPontos = new ArrayList<Ponto>();
+		consultaPontosDTO = new ConsultaPontosDTO();
 		
 		usuario.setNome("Teste");
 		usuario.setCpf("398.988.920-64");
@@ -79,6 +83,10 @@ public class PontoControllerTest {
 		pontoDTO.setTipoBatida(TipoBatida.ENTRADA.name());
 		
 		listaPontos.add(ponto);
+		
+		consultaPontosDTO.setListagemPonto(listaPontos);
+		consultaPontosDTO.setHorasTrabalhadas(Ponto.getHorasTotais(listaPontos));
+		
 	}
 	
 	@Test
@@ -101,7 +109,7 @@ public class PontoControllerTest {
 	
 	@Test
 	public void consultarPorUsuarioTest() throws Exception {
-		when(pontoService.consultarPorUsuario(Mockito.anyInt())).thenReturn(listaPontos);
+		when(pontoService.consultarPorUsuario(Mockito.anyInt())).thenReturn(consultaPontosDTO);
 		
 		mockMvc.perform(get("/batidas-ponto/"+idUsuario))
 				.andExpect(status().isOk());

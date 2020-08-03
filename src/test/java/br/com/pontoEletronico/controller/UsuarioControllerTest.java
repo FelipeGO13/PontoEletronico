@@ -26,7 +26,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.pontoEletronico.dto.UsuarioDTO;
 import br.com.pontoEletronico.model.Usuario;
 import br.com.pontoEletronico.service.UsuarioService;
 
@@ -44,7 +43,7 @@ public class UsuarioControllerTest {
 	
 	private Usuario usuario;
 	
-	private UsuarioDTO usuarioDTO;
+	private Usuario usuarioErro;
 	
 	private int idUsuario = 0;
 	
@@ -54,16 +53,16 @@ public class UsuarioControllerTest {
 	public void init() {
 		usuarios = new ArrayList<>();
 		usuario = new Usuario();
-		usuarioDTO = new UsuarioDTO();
+		usuarioErro = new Usuario();
 		
 		usuario.setNome("Teste");
 		usuario.setCpf("398.988.920-64");
 		usuario.setEmail("teste@teste.com");
 		usuario.setDataCadastro(LocalDate.now());
 		
-		usuarioDTO.setNome("Teste");
-		usuarioDTO.setCpf("398.988.920-64");
-		usuarioDTO.setEmail("teste@teste.com");
+		usuarioErro.setNome("Teste");
+		usuarioErro.setCpf("398.988.920-64");
+		usuarioErro.setEmail("teste@teste.com");
 		
 		usuarios.add(usuario);
 	}
@@ -85,13 +84,11 @@ public class UsuarioControllerTest {
 				.andExpect(jsonPath("$.cpf").value("398.988.920-64"))
 				.andExpect(jsonPath("$.email").value("teste@teste.com"))
 				.andExpect(jsonPath("$.dataCadastro").value(LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE)));
-
 	}
 	
 	@Test
 	public void criarTest() throws Exception {
-		usuarioDTO.setDataCadastro(LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
-		String usuarioJson = mapper.writeValueAsString(usuarioDTO);
+		String usuarioJson = mapper.writeValueAsString(usuario);
 		
 		when(usuarioService.criar(Mockito.any(Usuario.class))).thenReturn(usuario);
 		mockMvc.perform(post("/usuarios")
@@ -102,14 +99,25 @@ public class UsuarioControllerTest {
 				.andExpect(jsonPath("$.nome").value("Teste"))
 				.andExpect(jsonPath("$.cpf").value("398.988.920-64"))
 				.andExpect(jsonPath("$.email").value("teste@teste.com"));
-
 	}
 	
 	@Test
-	public void editarTest() throws Exception {
-		String usuarioJson = mapper.writeValueAsString(usuarioDTO);
+	public void criarErroTest() throws Exception {
+		String usuarioJson = mapper.writeValueAsString(usuarioErro);
 		
-		when(usuarioService.editar(Mockito.anyInt(), Mockito.any(UsuarioDTO.class))).thenReturn(usuario);
+		when(usuarioService.criar(Mockito.any(Usuario.class))).thenReturn(usuarioErro);
+		mockMvc.perform(post("/usuarios")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(usuarioJson))
+				.andExpect(status().isBadRequest());
+	}
+	
+	
+	@Test
+	public void editarTest() throws Exception {
+		String usuarioJson = mapper.writeValueAsString(usuario);
+		
+		when(usuarioService.editar(Mockito.anyInt(), Mockito.any(Usuario.class))).thenReturn(usuario);
 		
 		mockMvc.perform(patch("/usuarios/" + idUsuario)
 				.contentType(MediaType.APPLICATION_JSON)
