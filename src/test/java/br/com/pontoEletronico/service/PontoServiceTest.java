@@ -99,8 +99,8 @@ public class PontoServiceTest {
 		when(pontoRepository.findByUsuario(Mockito.any(Usuario.class))).thenReturn(listaPontos);
 		when(usuarioService.buscar(Mockito.anyInt())).thenReturn(Optional.of(usuario));
 
-		ConsultaPontosDTO consultaPontos = pontoService.consultarPorUsuario(idUsuario);
-		List<Ponto> pontosEncontrados = Lists.newArrayList(consultaPontos.getListagemPonto());
+		Iterable<Ponto> pontosIterable = pontoService.consultarPorUsuario(idUsuario);
+		List<Ponto> pontosEncontrados = Lists.newArrayList(pontosIterable);
 
 		assertEquals(1, pontosEncontrados.size());
 		assertEquals(ponto, pontosEncontrados.get(0));

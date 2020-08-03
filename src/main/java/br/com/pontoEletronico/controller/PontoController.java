@@ -54,8 +54,15 @@ public class PontoController {
 	@GetMapping("/{idUsuario}")
 	public ResponseEntity<ConsultaPontosDTO> consultarPorUsuario(@PathVariable("idUsuario") int idUsuario)
 			throws Exception {
+		
+		Iterable<Ponto> listagemPontos = pontoService.consultarPorUsuario(idUsuario);
 
-		return ResponseEntity.ok(pontoService.consultarPorUsuario(idUsuario));
+		ConsultaPontosDTO consultaPontosDTO = new ConsultaPontosDTO();
+
+		consultaPontosDTO.setListagemPonto(listagemPontos);
+		consultaPontosDTO.setHorasTrabalhadas(Ponto.getHorasTotais(listagemPontos));
+
+		return ResponseEntity.ok(consultaPontosDTO);
 	}
 
 }
