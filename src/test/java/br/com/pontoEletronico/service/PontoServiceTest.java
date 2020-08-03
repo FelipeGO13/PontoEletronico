@@ -21,8 +21,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.pontoEletronico.dto.ConsultaPontosDTO;
 import br.com.pontoEletronico.dto.PontoDTO;
-import br.com.pontoEletronico.enums.TipoBatida;
 import br.com.pontoEletronico.model.Ponto;
+import br.com.pontoEletronico.model.TipoBatida;
 import br.com.pontoEletronico.model.Usuario;
 import br.com.pontoEletronico.repository.PontoRepository;
 

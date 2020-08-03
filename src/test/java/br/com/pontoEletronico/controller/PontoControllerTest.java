@@ -27,8 +27,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.pontoEletronico.dto.PontoDTO;
-import br.com.pontoEletronico.enums.TipoBatida;
 import br.com.pontoEletronico.model.Ponto;
+import br.com.pontoEletronico.model.TipoBatida;
 import br.com.pontoEletronico.model.Usuario;
 import br.com.pontoEletronico.service.PontoService;
 import br.com.pontoEletronico.service.UsuarioService;

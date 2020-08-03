@@ -16,8 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import br.com.pontoEletronico.enums.TipoBatida;
-
 @Entity
 public class Ponto {
 

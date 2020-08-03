@@ -1,4 +1,4 @@
-package br.com.pontoEletronico.enums;
+package br.com.pontoEletronico.model;
 
 public enum TipoBatida {
 
